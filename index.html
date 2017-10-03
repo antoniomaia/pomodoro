@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>pomodoro</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div>
+		<div id="pomodoroWrapper">
+			<h1>Pomodoro Clock</h1>
+			<div id="row">
+				<div class="controls">
+					<p>Break Length</p>
+					<button onclick="changeBreakLength(-1)">-</button>
+					<span id="breakLength">5</span>
+					<button onclick="changeBreakLength(1)">+</button>
+				</div>
+				<div id="controlsGap"></div>
+				<div class="controls">
+					<p>Session Length</p>
+					<button onclick="changeSessionLength(-1)">-</button>
+					<span id="sessionLength">25</span>
+					<button onclick="changeSessionLength(1)">+</button>
+				</div>
+			</div>
+			<div id="row">
+				<div id="timeBox">
+					<p>Session</p>
+					<span id="sessionTime">25</span>
+				</div>
+			</div>
+
+			
+			<div id="controlButton">
+				<button onclick="startPomodoro()">Start</button>
+				<button onclick="resetPomodoro()">Reset</button>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="pomodoro.js"></script>
+</body>
+</html>
