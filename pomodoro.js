@@ -29,19 +29,21 @@ function startPomodoro(){
 	var timeInSec = timeMin * 60;
 
 	if(countDown) return;
-	timer(timeInSec);
+	timer(timeInSec, true);
 }
 
-function timer(seconds){
+function timer(seconds, breakAfter){
 	var now = Date.now();
 	var then = now + (seconds * 1000);
 	displayTimeLeft(seconds);
 
 	countDown = setInterval(function(){
 		var secondsLeft = Math.round((then - Date.now()) / 1000);
-
-		if (seconds < 0){
+		console.log(secondsLeft);
+		if (secondsLeft < 0){
 			clearInterval(countDown);
+			playSound();
+			if(breakAfter) makeBreak(breakAfter);
 			return;
 		}
 
@@ -61,5 +63,15 @@ function resetPomodoro(){
 	clearInterval(countDown);
 	countDown = undefined;
 	updateElementById("sessionTime", sessionLength);
+}
+
+function playSound(){
+	document.getElementById("alertSound").play();
+}
+
+function makeBreak(breakAfter){
+	var timeMin = document.getElementById("breakLength").innerHTML;
+	var timeInSec = timeMin * 60;
+		timer(timeInSec, false);
 }
 
