@@ -4,7 +4,7 @@ var countDown;
 
 
 function changeBreakLength(time){
-	if(breakLength > 1)
+	if(breakLength > 1 || time > 0)
 		breakLength += time;
 	else
 		breakLength = 1;
@@ -13,13 +13,13 @@ function changeBreakLength(time){
 }
 function changeSessionLength(time){
 	resetPomodoro();
-	if(sessionLength > 1)
+	if(sessionLength > 1 || time > 0)
 		sessionLength += time;
 	else
 		sessionLength = 1;
 
 	updateElementById("sessionLength", sessionLength);
-	updateElementById("sessionTime", sessionLength);
+	updateElementById("sessionTime", sessionLength + ":00");
 }
 function updateElementById(element, value){
 	document.getElementById(element).innerHTML = value;
@@ -62,7 +62,7 @@ function displayTimeLeft(seconds){
 function resetPomodoro(){
 	clearInterval(countDown);
 	countDown = undefined;
-	updateElementById("sessionTime", sessionLength);
+	updateElementById("sessionTime", sessionLength + ":00");
 }
 
 function playSound(){
