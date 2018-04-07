@@ -1,19 +1,18 @@
-var sessionLength = 25;
-var breakLength = 5;
-var countDown; 
+let sessionLength = 25;
+let breakLength = 5;
+let countDown;
 
-
-function changeBreakLength(time){
-	if(breakLength > 1 || time > 0)
+function changeBreakLength(time) {
+	if (breakLength > 1 || time > 0)
 		breakLength += time;
 	else
 		breakLength = 1;
 
 	updateElementById("breakLength", breakLength);
 }
-function changeSessionLength(time){
+function changeSessionLength(time) {
 	resetPomodoro();
-	if(sessionLength > 1 || time > 0)
+	if (sessionLength > 1 || time > 0)
 		sessionLength += time;
 	else
 		sessionLength = 1;
@@ -21,29 +20,29 @@ function changeSessionLength(time){
 	updateElementById("sessionLength", sessionLength);
 	updateElementById("sessionTime", sessionLength + ":00");
 }
-function updateElementById(element, value){
+function updateElementById(element, value) {
 	document.getElementById(element).innerHTML = value;
 }
-function startPomodoro(){
-	var timeMin = document.getElementById("sessionLength").innerHTML;
-	var timeInSec = timeMin * 60;
+function startPomodoro() {
+	const timeMin = document.getElementById("sessionLength").innerHTML;
+	const timeInSec = timeMin * 60;
 
-	if(countDown) return;
+	if (countDown) return;
 	timer(timeInSec, true);
 }
 
-function timer(seconds, breakAfter){
-	var now = Date.now();
-	var then = now + (seconds * 1000);
+function timer(seconds, breakAfter) {
+	const now = Date.now();
+	const then = now + (seconds * 1000);
 	displayTimeLeft(seconds);
 
-	countDown = setInterval(function(){
-		var secondsLeft = Math.round((then - Date.now()) / 1000);
-		console.log(secondsLeft);
-		if (secondsLeft < 0){
+	countDown = setInterval(() => {
+		const secondsLeft = Math.round((then - Date.now()) / 1000);
+
+		if (secondsLeft < 0) {
 			clearInterval(countDown);
 			playSound();
-			if(breakAfter) makeBreak(breakAfter);
+			if (breakAfter) makeBreak(breakAfter);
 			return;
 		}
 
@@ -52,26 +51,25 @@ function timer(seconds, breakAfter){
 }
 
 //display time in min:sec format
-function displayTimeLeft(seconds){
-	var minutes = Math.floor(seconds / 60);
-	var remainSeconds = seconds % 60;
-	var display = ((remainSeconds < 10) ? minutes + ":0" + remainSeconds : minutes + ":" + remainSeconds); 
+function displayTimeLeft(seconds) {
+	const minutes = Math.floor(seconds / 60);
+	const remainSeconds = seconds % 60;
+	const display = ((remainSeconds < 10) ? minutes + ":0" + remainSeconds : minutes + ":" + remainSeconds);
 	updateElementById("sessionTime", display);
 }
 
-function resetPomodoro(){
+function resetPomodoro() {
 	clearInterval(countDown);
 	countDown = undefined;
 	updateElementById("sessionTime", sessionLength + ":00");
 }
 
-function playSound(){
+function playSound() {
 	document.getElementById("alertSound").play();
 }
 
-function makeBreak(breakAfter){
-	var timeMin = document.getElementById("breakLength").innerHTML;
-	var timeInSec = timeMin * 60;
-		timer(timeInSec, false);
+function makeBreak(breakAfter) {
+	const timeMin = document.getElementById("breakLength").innerHTML;
+	const timeInSec = timeMin * 60;
+	timer(timeInSec, false);
 }
-
